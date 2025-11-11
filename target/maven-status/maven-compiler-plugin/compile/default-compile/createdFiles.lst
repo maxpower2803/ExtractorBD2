@@ -1,0 +1,6 @@
+app\controllers\GrillasController.class
+app\models\ServerInfo.class
+app\db\ConnectionPoolManager.class
+app\db\DatabaseMetadataDao.class
+app\db\ServerConfig.class
+app\Main.class
