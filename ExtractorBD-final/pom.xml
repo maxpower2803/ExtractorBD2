@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ExtractorBD2</groupId>
+	<artifactId>ExtractorBD2</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>ExtractorBD-JavaFX</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>25</java.version>
+		<javafx.version>25.0.1</javafx.version>
+		<exec.mainClass>app.Main</exec.mainClass>
+	</properties>
+
+	<dependencies>
+		<!-- ✅ JavaFX -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>2.0.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+
+		<!-- ✅ HikariCP (pool de conexiones) -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>6.2.1</version>
+		</dependency>
+
+		<!-- ✅ Driver SQL Server -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>12.6.2.jre11</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<!-- ✅ Compilador -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+
+			<!-- ✅ Plugin de JavaFX -->
+			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>0.0.8</version>
+				<configuration>
+					<mainClass>${exec.mainClass}</mainClass>
+				</configuration>
+			</plugin>
+
+			<!-- ✅ Plugin Exec (alternativa para Eclipse Run Config) -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<mainClass>${exec.mainClass}</mainClass>
+					<commandlineArgs></commandlineArgs>
+					<arguments>
+						<argument>--module-path</argument>
+						<argument>C:\Program Files\Java\javafx-sdk-25.0.1\lib</argument>
+						<argument>--add-modules</argument>
+						<argument>javafx.controls,javafx.fxml</argument>
+						<argument>--enable-native-access=ALL-UNNAMED</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>app.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
